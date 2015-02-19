@@ -20,11 +20,6 @@
 #include <string.h>
 #include <inttypes.h>
 
-static bool printable(uint8_t c)
-{
-    return c >= ' ' && c <= '~';
-}
-
 static void print_chunk(FILE *fp, uint64_t offset, const uint8_t *mem, int size)
 {
     fprintf(fp, "%08" PRIx64 " ", offset);
@@ -32,7 +27,7 @@ static void print_chunk(FILE *fp, uint64_t offset, const uint8_t *mem, int size)
         fprintf(fp, "%*s %02x", i == 8, "", mem[i]);
     fprintf(fp, "%*s|", 51 - 3*size - (size>=9), "");
     for (int i = 0; i < size; ++i)
-        putc(printable(mem[i]) ? mem[i] : '.', fp);
+        putc(mem[i] >= ' ' && mem[i] <= '~' ? mem[i] : '.', fp);
     fputs("|\n", fp);
 }
 
