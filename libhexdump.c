@@ -18,10 +18,11 @@
 #include <ctype.h>
 #include <stdbool.h>
 #include <string.h>
+#include <inttypes.h>
 
 static void print_chunk(FILE *fp, uint64_t offset, const uint8_t *mem, int size)
 {
-    fprintf(fp, "%08llx ", offset);
+    fprintf(fp, "%08" PRIx64 " ", offset);
     for (int i = 0; i < size; ++i)
         fprintf(fp, "%*s %02x", i == 8, "", mem[i]);
     fprintf(fp, "%*s|", 51 - 3*size - (size>=9), "");
@@ -54,5 +55,5 @@ void hexdump(FILE *fp, const uint8_t *mem, uint64_t size)
         if (num_empty == 2)
             fputs("*\n", fp);
     }
-    fprintf(fp, "%08llx\n", size);
+    fprintf(fp, "%08" PRIx64 "\n", size);
 }
